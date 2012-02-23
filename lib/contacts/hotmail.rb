@@ -66,7 +66,7 @@ class Contacts
           name = ""
           name = row["First Name"] if !row["First Name"].nil?
           name << " #{row["Last Name"]}" if !row["Last Name"].nil?
-          [name, row["E-mail Address"]]
+          [name, row["E-mail Address"] || ""]
         end
       else
         @contacts || []

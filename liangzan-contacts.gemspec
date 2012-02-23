@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "liangzan-contacts"
-  s.version = "1.2.8"
+  s.version = "1.2.9"
   s.platform = Gem::Platform::RUBY
   s.authors = ["Lucas Carlson","Brad Imbierowicz", "Wong Liang Zan"]
   s.email = "zan@liangzan.net"

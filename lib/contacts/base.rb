@@ -211,7 +211,12 @@ class Contacts
   end
 
   def self.guess(login, password, options={})
-    TYPES.inject([]) do |a, t|
+    if keys = options[:types]
+      types = TYPES.select{|k, v| keys.include?(k)}
+    end
+    types ||= TYPES
+
+    types.inject([]) do |a, t|
       begin
         a + t[1].new(login, password, options).contacts
       rescue AuthenticationError

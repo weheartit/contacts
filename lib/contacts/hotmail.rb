@@ -62,6 +62,9 @@ class Contacts
         url = URI.parse(contact_list_url)
         data, resp, cookies, forward = get(get_contact_list_url, @cookies )
 
+
+        data.force_encoding('ISO-8859-1')
+
         @contacts = CSV.parse(data, {:headers => true, :col_sep => data[7]}).map do |row|
           name = ""
           name = row["First Name"] if !row["First Name"].nil?

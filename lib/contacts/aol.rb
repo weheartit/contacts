@@ -6,10 +6,10 @@ class Contacts
     LOGIN_URL           = "https://my.screenname.aol.com/_cqr/login/login.psp"
     LOGIN_REFERER_URL   = "http://webmail.aol.com/"
     LOGIN_REFERER_PATH = "sitedomain=sns.webmail.aol.com&lang=en&locale=us&authLev=0&uitype=mini&loginId=&redirType=js&xchk=false"
-    AOL_NUM = "29970-343" # this seems to change each time they change the protocol
+    AOL_NUM = "35752-111" # this seems to change each time they change the protocol
     
-    CONTACT_LIST_URL    = "http://webmail.aol.com/#{AOL_NUM}/aim-2/en-us/Lite/ContactList.aspx?folder=Inbox&showUserFolders=False"
-    CONTACT_LIST_CSV_URL = "http://webmail.aol.com/#{AOL_NUM}/aim-2/en-us/Lite/ABExport.aspx?command=all"
+    CONTACT_LIST_URL    = "http://mail.aol.com/#{AOL_NUM}/aol-6/en-us/Lite/ContactList.aspx"
+    CONTACT_LIST_CSV_URL = "http://mail.aol.com/#{AOL_NUM}/aol-6/en-us/Lite/ABExport.aspx?command=all"    
     PROTOCOL_ERROR      = "AOL has changed its protocols, please upgrade this library first. If that does not work, dive into the code and submit a patch at http://github.com/cardmagic/contacts"
     
     def real_connect
@@ -63,9 +63,9 @@ class Contacts
         data, resp, cookies, forward, old_url = get(forward, cookies, old_url) + [forward]
       end
  
-      doc = Hpricot(data)
-      (doc/:input).each do |input|
-        postdata["usrd"] = input.attributes["value"] if input.attributes["name"] == "usrd"
+      doc = Nokogiri(data)
+      (doc/'input[name=usrd]').each do |input|
+        postdata["usrd"] = input['value']
       end
       # parse data for <input name="usrd" value="2726212" type="hidden"> and add it to the postdata
  
@@ -80,7 +80,7 @@ class Contacts
         data, resp, cookies, forward, old_url = get(forward, cookies, old_url) + [forward]
       end
       
-      if data.index("Invalid Username or Password. Please try again.")
+      if data.index("Incorrect Username or Password.")
         raise AuthenticationError, "Username and password do not match"
       elsif data.index("Required field must not be blank")
         raise AuthenticationError, "Login and password must not be blank"
@@ -112,13 +112,15 @@ class Contacts
         if resp.code_type != Net::HTTPOK
           raise ConnectionError, self.class.const_get(:PROTOCOL_ERROR)
         end
+
+        user = nil
  
         # parse data and grab <input name="user" value="8QzMPIAKs2" type="hidden">
-        doc = Hpricot(data)
-        (doc/:input).each do |input|
-          postdata["user"] = input.attributes["value"] if input.attributes["name"] == "user"
+        doc = Nokogiri(data)
+        (doc/'input[name=user]').each do |input|
+          user = input["value"]
         end
-        
+
         data, resp, cookies, forward, old_url = get(CONTACT_LIST_CSV_URL, @cookies, CONTACT_LIST_URL) + [CONTACT_LIST_URL]
  
         until forward.nil?
@@ -135,7 +137,7 @@ class Contacts
   private
     
     def parse(data, options={})
-      data = CSV::Reader.parse(data)
+      data = CSV.parse(data)
       col_names = data.shift
       @contacts = data.map do |person|
         ["#{person[0]} #{person[1]}", person[4]] if person[4] && !person[4].empty?

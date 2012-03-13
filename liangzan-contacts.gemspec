@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   s.name = "liangzan-contacts"
-  s.version = "1.2.10"
+  s.version = "1.2.11"
   s.platform = Gem::Platform::RUBY
-  s.authors = ["Lucas Carlson","Brad Imbierowicz", "Wong Liang Zan", "Mateusz Konikowski"]
+  s.authors = ["Lucas Carlson","Brad Imbierowicz", "Wong Liang Zan", "Mateusz Konikowski", "Laurynas Butkus"]
   s.email = "zan@liangzan.net"
   s.homepage = "http://github.com/liangzan/contacts"
   s.summary = "grab contacts from Yahoo, AOL, Gmail, Hotmail, and Plaxo"

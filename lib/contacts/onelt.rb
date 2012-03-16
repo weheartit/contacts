@@ -1,37 +1,62 @@
 class Contacts
   class Onelt < Base
     LOGIN_URL = "http://w33.one.lt/logonSubsite.do?subsite=pastas"
+    EMAIL_URL = "http://email.one.lt/"
     ADDRESS_BOOK_URL = "http://email.one.lt/index.html?screen=RedirectServer&pane=contacts"
     PROTOCOL_ERROR = "One.lt has changed its protocols, please upgrade this library first. If that does not work, report this error at http://rubyforge.org/forum/?group_id=2693"
 
     attr_accessor :cookies
 
     def real_connect
-      postdata =  "subsite=pastas&username=%s&password=%s" % [
+      data, resp, self.cookies, forward = get(LOGIN_URL)
+
+      postdata =  "username=%s&password=%s&subsite=pastas" % [
         CGI.escape(username),
         CGI.escape(password)
       ]
 
-      data, resp, self.cookies, forward, old_url = post(LOGIN_URL, postdata, "")
+      data, resp, self.cookies, forward, old_url = post(LOGIN_URL, postdata, self.cookies)
 
       if data.index("f-login")
         raise AuthenticationError, "Username and password do not match"
-      elsif !cookies.match('JSESSIONID')
+      elsif !forward.nil? && forward.match('brutecheck')
+        raise AuthenticationError, "Got captcha"
+      elsif forward.nil? || !forward.match('tkn')
         raise ConnectionError, PROTOCOL_ERROR
       end
 
-      data, resp, self.cookies, forward, old_url = post(forward, postdata, self.cookies)
+      forward+= '&subsite=pastas' unless forward.match('subsite=pastas')
       p forward
-      until forward.nil?
-        data, resp, self.cookies, forward, old_url = get(forward, self.cookies, old_url) + [forward]
-      end
-
-      p data
+      
+      # http://w32.one.lt/logonSubsite.do?subsite=pastas&tkn=3229
+      data, resp, self.cookies, forward, old_url = get(forward, self.cookies, LOGIN_URL) + [forward]
+      
+      # http://pastas.one.lt/?tkn=979
+      data, resp, self.cookies, forward, old_url = get(forward, self.cookies, old_url) + [forward]
+      
+      # http://email.one.lt/?action=LoginUser
+      data, resp, self.cookies, forward, old_url = get(forward, self.cookies, old_url) + [forward]
     end
 
     def contacts
       data, resp, cookies, forward = get(ADDRESS_BOOK_URL, self.cookies)
 
+      doc = Nokogiri(data)
+      int = nil
+      
+      (doc/"input[name=int]").each do |input|
+        int = input['value']
+      end
+
+      postdata = "action=LoginUser&pane=contacts&int=#{int}"
+      data, resp, cookies, forward = post(EMAIL_URL, postdata, self.cookies)
+
+      doc = Nokogiri(data)
+
+      (doc/'form[name=contacts_items]//table[2]//tr[class=whiteBg]').each do |tr|
+        p tr.at('td[1]').inner_text
+        p tr.at('td[3]').inner_text
+      end
 
       []
     end

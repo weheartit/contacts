@@ -26,7 +26,7 @@ class Contacts
       end
 
       forward+= '&subsite=pastas' unless forward.match('subsite=pastas')
-      p forward
+      #p forward
       
       # http://w32.one.lt/logonSubsite.do?subsite=pastas&tkn=3229
       data, resp, self.cookies, forward, old_url = get(forward, self.cookies, LOGIN_URL) + [forward]
@@ -39,7 +39,7 @@ class Contacts
     end
 
     def contacts
-      data, resp, cookies, forward = get(ADDRESS_BOOK_URL, self.cookies)
+      data, resp, self.cookies, forward = get(ADDRESS_BOOK_URL, self.cookies)
 
       doc = Nokogiri(data)
       int = nil
@@ -49,16 +49,34 @@ class Contacts
       end
 
       postdata = "action=LoginUser&pane=contacts&int=#{int}"
-      data, resp, cookies, forward = post(EMAIL_URL, postdata, self.cookies)
+      data, resp, self.cookies, forward = post(EMAIL_URL, postdata, self.cookies)
 
-      doc = Nokogiri(data)
+      page = 1
 
-      (doc/'form[name=contacts_items]//table[2]//tr[class=whiteBg]').each do |tr|
-        p tr.at('td[1]').inner_text
-        p tr.at('td[3]').inner_text
+      until page.nil? 
+        url = "http://email.one.lt/index.html?pane=contacts&page-number=%d" % page
+        p url
+        data, resp, self.cookies, forward = get(url, self.cookies)
+
+        doc = Nokogiri(data)
+
+        contacts = []
+
+        (doc/'form[name=contacts_items]//table[2]//tr[class=whiteBg]').each do |tr|
+          name = tr.at('td[2]').text.strip
+          email = tr.at('td[4]').text.strip
+
+          p email
+          next if email.empty?
+
+          contacts << [ name, email ]
+        end
+
+        page+= 1
+        page = nil unless data.match("&page-number=#{page}")
       end
 
-      []
+      contacts
     end
 
     private

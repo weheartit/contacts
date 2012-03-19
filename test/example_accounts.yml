@@ -92,3 +92,14 @@ onelt:
       name: "FirstName2"
       email_address: "firstname2@example.com"
 
+inbox_lt:
+  username: <changeme>
+  password: <changeme>
+  contacts:
+    -
+      name: "FirstName1 LastName1"
+      email_address: "firstname1@example.com"
+    -
+      name: "FirstName2 LastName2"
+      email_address: "firstname2@example.com"
+

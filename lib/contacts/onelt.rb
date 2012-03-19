@@ -51,22 +51,20 @@ class Contacts
       postdata = "action=LoginUser&pane=contacts&int=#{int}"
       data, resp, self.cookies, forward = post(EMAIL_URL, postdata, self.cookies)
 
+      contacts = []
       page = 1
 
       until page.nil? 
         url = "http://email.one.lt/index.html?pane=contacts&page-number=%d" % page
-        p url
+      
         data, resp, self.cookies, forward = get(url, self.cookies)
 
         doc = Nokogiri(data)
-
-        contacts = []
 
         (doc/'form[name=contacts_items]//table[2]//tr[class=whiteBg]').each do |tr|
           name = tr.at('td[2]').text.strip
           email = tr.at('td[4]').text.strip
 
-          p email
           next if email.empty?
 
           contacts << [ name, email ]

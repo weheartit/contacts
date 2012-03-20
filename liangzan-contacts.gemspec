@@ -1,12 +1,12 @@
 Gem::Specification.new do |s|
   s.name = "liangzan-contacts"
-  s.version = "1.2.15"
+  s.version = "1.2.16"
   s.platform = Gem::Platform::RUBY
   s.authors = ["Lucas Carlson","Brad Imbierowicz", "Wong Liang Zan", "Mateusz Konikowski", "Laurynas Butkus"]
   s.email = "zan@liangzan.net"
   s.homepage = "http://github.com/liangzan/contacts"
-  s.summary = "grab contacts from Yahoo, AOL, Gmail, Hotmail, Plaxo, GMX.net, Web.de, inbox.it, seznam.cz"
-  s.description = "A universal interface to grab contact list information from Yahoo, AOL, Gmail, Hotmail, Plaxo, GMX.net, Web.de, inbox.it, sezname.cz. Now supporting Ruby 1.9."
+  s.summary = "grab contacts from Yahoo, AOL, Gmail, Hotmail, Plaxo, GMX.net, Web.de, inbox.it, seznam.cz, tmobile.de"
+  s.description = "A universal interface to grab contact list information from Yahoo, AOL, Gmail, Hotmail, Plaxo, GMX.net, Web.de, inbox.it, sezname.cz, tmobile.de. Now supporting Ruby 1.9."
 
   s.add_dependency "json", "~> 1.6.5"
   s.add_dependency 'gdata_19', '~> 1.1.3'

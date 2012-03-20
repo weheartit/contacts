@@ -42,10 +42,9 @@ class Contacts
     end
 
     def contacts
-      url = ADDRESS_BOOK_URL
       @contacts = []
       
-      data, resp, self.cookies, forward = get(url, self.cookies)      
+      data, resp, self.cookies, forward = get(ADDRESS_BOOK_URL, self.cookies)      
 
       CSV.parse(data, { :col_sep => ';' }) do |row|
         last_name, first_name, unknown, email = row

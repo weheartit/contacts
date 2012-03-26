@@ -1,5 +1,6 @@
 class Contacts
   class InboxLt < Base
+    DETECTED_DOMAINS = [ /inbox\.lt/i ]
     URL = "http://www.inbox.lt/?language=lt"
     LOGIN_URL = "https://login.inbox.lt/redirect.php"
     ADDRESS_BOOK_URL = "http://mail.inbox.lt/horde/turba/?char=&sort=name&page=%d"

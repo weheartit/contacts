@@ -8,6 +8,15 @@ class SeznamContactImporterTest < ContactImporterTestCase
     @account = TestAccounts[:seznam]
   end
 
+  def test_guess_importer
+    assert_equal Contacts::Seznam, Contacts.guess_importer('test@seznam.cz')
+    assert_equal Contacts::Seznam, Contacts.guess_importer('test@email.cz')
+    assert_equal Contacts::Seznam, Contacts.guess_importer('test@post.cz')
+    assert_equal Contacts::Seznam, Contacts.guess_importer('test@spoluzaci.cz')
+    assert_equal Contacts::Seznam, Contacts.guess_importer('test@stream.cz')
+    assert_equal Contacts::Seznam, Contacts.guess_importer('test@firmy.cz')
+  end
+
   def test_successful_login
     Contacts.new(:seznam, @account.username, @account.password)
   end

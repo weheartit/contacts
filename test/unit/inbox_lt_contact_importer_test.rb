@@ -8,6 +8,10 @@ class InboxLtContactImporterTest < ContactImporterTestCase
     @account = TestAccounts[:inbox_lt]
   end
 
+  def test_guess_importer
+    assert_equal Contacts::InboxLt, Contacts.guess_importer('test@inbox.lt')
+  end
+
   def test_successful_login
     Contacts.new(:inbox_lt, @account.username, @account.password)
   end

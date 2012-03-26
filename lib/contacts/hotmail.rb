@@ -4,6 +4,7 @@ require 'nokogiri'
 
 class Contacts
   class Hotmail < Base
+    DETECTED_DOMAINS = [ /hotmail/i, /live/i, /msn/i, /chaishop/i ]
     URL = "https://login.live.com/login.srf?id=2"
     CONTACT_LIST_URL = "https://mail.live.com/mail/GetContacts.aspx"
     PROTOCOL_ERROR = "Hotmail has changed its protocols, please upgrade this library first. If that does not work, report this error at http://rubyforge.org/forum/?group_id=2693"

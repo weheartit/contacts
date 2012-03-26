@@ -11,6 +11,8 @@ class Contacts
   TYPES = {}
 
   class Base
+    DETECTED_DOMAINS = []
+
     def initialize(login, password, options={})
       @login = login
       @password = password
@@ -212,18 +214,36 @@ class Contacts
     end
   end
 
-  def self.guess(login, password, options={})
+  def self.get_email_domain(email)
+    name, domain = email.split('@')
+    domain
+  end
+
+  def self.guess_importer(email, options={})
     if keys = options[:types]
       types = TYPES.select{|k, v| keys.include?(k)}
-    end
+    end    
     types ||= TYPES
 
-    types.inject([]) do |a, t|
-      begin
-        a + t[1].new(login, password, options).contacts
-      rescue AuthenticationError
-        a
-      end
-    end.uniq
+    email_domain = get_email_domain(email)
+
+    types.values.find do |klass|
+      klass::DETECTED_DOMAINS.any? { |m| email_domain.match(m) }
+    end
+  end
+
+  def self.guess(email, password, options={})
+    klass = guess_importer(email, options)
+
+    return if klass.nil?
+
+    a = []
+
+    begin
+      a = klass.new(email, password, options).contacts
+    rescue AuthenticationError
+    end
+
+    return a
   end
 end

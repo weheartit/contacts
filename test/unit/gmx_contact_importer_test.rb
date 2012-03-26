@@ -8,6 +8,13 @@ class GmxContactImporterTest < ContactImporterTestCase
     @account = TestAccounts[:gmx]
   end
 
+  def test_guess_importer
+    assert_equal Contacts::Gmx, Contacts.guess_importer('test@gmx.de')
+    assert_equal Contacts::Gmx, Contacts.guess_importer('test@gmx.net')
+    assert_equal Contacts::Gmx, Contacts.guess_importer('test@gmx.at')
+    assert_equal Contacts::Gmx, Contacts.guess_importer('test@gmx.ch')
+  end
+
   def test_successful_login
     Contacts.new(:gmx, @account.username, @account.password)
   end

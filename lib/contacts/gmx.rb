@@ -1,5 +1,6 @@
 class Contacts
   class Gmx < Base
+    DETECTED_DOMAINS = [ /gmx.de/i, /gmx.at/i, /gmx.ch/i, /gmx.net/i ]
     LOGIN_URL = "https://service.gmx.net/de/cgi/login"
     ADDRESS_BOOK_URL = "https://service.gmx.net/de/cgi/g.fcgi/addressbook/cab?cc=subnavi_adressbuch&sid="
     EXPORT_URL = "https://adressbuch.gmx.net/exportcontacts"

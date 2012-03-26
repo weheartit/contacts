@@ -3,6 +3,7 @@ require 'gdata'
 class Contacts
   class Gmail < Base
     
+    DETECTED_DOMAINS = [ /gmail.com/i, /googlemail.com/i ]
     CONTACTS_SCOPE = 'http://www.google.com/m8/feeds/'
     CONTACTS_FEED = CONTACTS_SCOPE + 'contacts/default/full/?max-results=1000'
     

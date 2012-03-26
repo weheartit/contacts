@@ -8,6 +8,10 @@ class WebDeContactImporterTest < ContactImporterTestCase
     @account = TestAccounts[:web_de]
   end
 
+  def test_guess_importer
+    assert_equal Contacts::WebDe, Contacts.guess_importer('test@web.de')
+  end
+
   def test_successful_login
     Contacts.new(:web_de, @account.username, @account.password)
   end

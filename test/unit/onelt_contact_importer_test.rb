@@ -8,6 +8,10 @@ class OneltContactImporterTest < ContactImporterTestCase
     @account = TestAccounts[:onelt]
   end
 
+  def test_guess_importer
+    assert_equal Contacts::Onelt, Contacts.guess_importer('test@one.lt')
+  end
+
   def test_successful_login
     Contacts.new(:onelt, @account.username, @account.password)
   end

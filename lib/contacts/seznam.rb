@@ -1,5 +1,6 @@
 class Contacts
   class Seznam < Base
+    DETECTED_DOMAINS = [ /seznam\.cz/i, /email\.cz/i, /post\.cz/i, /spoluzaci\.cz/i, /stream\.cz/i, /firmy\.cz/i, ]
     LOGIN_URL = "https://login.szn.cz/loginProcess"
     ADDRESS_BOOK_URL = "http://email.seznam.cz/abookCsvExport?sessionId=&charset=utf-8&eof=windows&export=nameLast&export=nameFirst&export=nick&export=email"
 

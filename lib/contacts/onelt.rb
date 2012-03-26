@@ -1,5 +1,6 @@
 class Contacts
   class Onelt < Base
+    DETECTED_DOMAINS = [ /one\.lt/i ]
     LOGIN_URL = "http://w33.one.lt/logonSubsite.do?subsite=pastas"
     EMAIL_URL = "http://email.one.lt/"
     ADDRESS_BOOK_URL = "http://email.one.lt/index.html?screen=RedirectServer&pane=contacts"

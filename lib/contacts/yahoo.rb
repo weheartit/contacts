@@ -1,5 +1,6 @@
 class Contacts
   class Yahoo < Base
+    DETECTED_DOMAINS    = [ /yahoo/i, /ymail/i, /rocketmail/i ]    
     URL                 = "http://mail.yahoo.com/"
     LOGIN_URL           = "https://login.yahoo.com/config/login"
     ADDRESS_BOOK_URL    = "http://address.mail.yahoo.com/?.rand=430244936"

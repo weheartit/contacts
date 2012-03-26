@@ -1,5 +1,6 @@
 class Contacts
   class WebDe < Base
+    DETECTED_DOMAINS = [ /web\.de/i ]
     LOGIN_URL = "https://uas2.uilogin.de/centrallogin-3.1/login"
     ADDRESS_BOOK_URL = "https://mm.web.de/contacts"
 

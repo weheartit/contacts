@@ -7,6 +7,12 @@ class HotmailContactImporterTest < ContactImporterTestCase
     @account = TestAccounts[:hotmail]
   end
 
+  def test_guess_importer
+    assert_equal Contacts::Hotmail, Contacts.guess_importer('test@hotmail.com')
+    assert_equal Contacts::Hotmail, Contacts.guess_importer('test@hotmail.de')
+    assert_equal Contacts::Hotmail, Contacts.guess_importer('test@live.de')
+  end
+
   def test_successful_login
     Contacts.new(:hotmail, @account.username, @account.password)
   end

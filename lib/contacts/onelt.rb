@@ -3,7 +3,7 @@ class Contacts
     DETECTED_DOMAINS = [ /one\.lt/i ]
     LOGIN_URL = "http://w33.one.lt/logonSubsite.do?subsite=pastas"
     EMAIL_URL = "http://email.one.lt/"
-    ADDRESS_BOOK_URL = "http://email.one.lt/index.html?screen=RedirectServer&pane=contacts"
+    ADDRESS_BOOK_URL = "http://w33.one.lt/resinRedir.do?pane=email"
     PROTOCOL_ERROR = "One.lt has changed its protocols, please upgrade this library first. If that does not work, report this error at http://rubyforge.org/forum/?group_id=2693"
 
     attr_accessor :cookies
@@ -25,18 +25,6 @@ class Contacts
       elsif forward.nil? || !forward.match('tkn')
         raise ConnectionError, PROTOCOL_ERROR
       end
-
-      forward+= '&subsite=pastas' unless forward.match('subsite=pastas')
-      #p forward
-      
-      # http://w32.one.lt/logonSubsite.do?subsite=pastas&tkn=3229
-      data, resp, self.cookies, forward, old_url = get(forward, self.cookies, LOGIN_URL) + [forward]
-      
-      # http://pastas.one.lt/?tkn=979
-      data, resp, self.cookies, forward, old_url = get(forward, self.cookies, old_url) + [forward]
-      
-      # http://email.one.lt/?action=LoginUser
-      data, resp, self.cookies, forward, old_url = get(forward, self.cookies, old_url) + [forward]
     end
 
     def contacts

@@ -228,7 +228,7 @@ class Contacts
     email_domain = get_email_domain(email)
 
     types.values.find do |klass|
-      klass::DETECTED_DOMAINS.any? { |m| email_domain.match(m) }
+      klass::DETECTED_DOMAINS.any? { |m| email_domain.to_s.match(m) }
     end
   end
 

@@ -61,11 +61,10 @@ class Contacts
     def contacts(options = {})
       if @contacts.nil? && connected?
         url = URI.parse(contact_list_url)
-        data, resp, cookies, forward = get(get_contact_list_url, @cookies )
-
+        contact_list_url = get_contact_list_url(get_contact_list_url)
+        data, resp, cookies, forward = get(contact_list_url, @cookies )
 
         data.force_encoding('ISO-8859-1')
-
         @contacts = CSV.parse(data, {:headers => true, :col_sep => data[7]}).map do |row|
           name = ""
           name = row["First Name"] if !row["First Name"].nil?
@@ -83,8 +82,8 @@ class Contacts
 
     # the contacts url is dynamic
     # luckily it tells us where to find it
-    def get_contact_list_url
-      data = get(CONTACT_LIST_URL, @cookies)[0]
+    def get_contact_list_url(url=CONTACT_LIST_URL)
+      data = get(url, @cookies)[0]
       html_doc = Nokogiri::HTML(data)
       html_doc.xpath("//a")[0]["href"]
     end

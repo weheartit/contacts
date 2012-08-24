@@ -1,8 +1,8 @@
 class Contacts
   class TonlineDe < Base
     DETECTED_DOMAINS = [ /t-mobile\.de/i, /t-online\.de/i ]
-    URL = "https://email.t-online.de/V4-0-4-0/srv-bin/aaa?method=deliverLoginBox"
-    ADDRESS_BOOK_URL = "https://email.t-online.de/V4-0-4-0/srv-bin/addressbook?method=exportAdressbook&p%5Bformat%5D=CSV&p%5Bliid%5D="
+    URL = "https://email.t-online.de/V4-0-7-0/srv-bin/aaa?method=deliverLoginBox"
+    ADDRESS_BOOK_URL = "https://email.t-online.de/V4-0-7-0/srv-bin/addressbook?method=exportAdressbook&p%5Bformat%5D=CSV&p%5Bliid%5D="
     PROTOCOL_ERROR = "t-online.de has changed its protocols"
 
     attr_accessor :cookies, :tid

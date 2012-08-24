@@ -61,7 +61,7 @@ class Contacts
     def contacts(options = {})
       if @contacts.nil? && connected?
         url = URI.parse(contact_list_url)
-        contact_list_url = get_contact_list_url(get_contact_list_url)
+        contact_list_url = get_contact_list_url
         data, resp, cookies, forward = get(contact_list_url, @cookies )
 
         data.force_encoding('ISO-8859-1')

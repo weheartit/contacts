@@ -1,0 +1,101 @@
+= Changelog
+
+== 1.2.25 (March 9th 2013)
+
+* Add additional redirects required by Hotmail connector
+
+== 1.2.24 (February 23th 2013)
+
+* Fix Hotmail Encoding::InvalidByteSequenceError in contacts connector
+
+== 1.2.23 (February 5th 2013)
+
+* Fix invalid UTF-8 characters with Hotmail
+* Fix invalid UTF-8 byte sequence in ruby 1.9.2
+* Fix Hotmail encoding problem
+
+== 1.2.22 (November 3rd 2012)
+
+* Force Hotmail encoding to use UTF-8
+
+== 1.2.21 (August 24th 2012)
+
+* Fix Hotmail and Tonline connectors
+
+== 1.2.20 (August 1st 2012)
+
+* Update README: add new providers
+* Update Hotmail contact list url as it leads to another url before leading to the actual one
+
+== 1.2.19 (June 8th 2012)
+
+* Fix connector guessing when supplying only login
+
+== 1.2.18 (March 27th 2012)
+
+* Fix one.lt connector
+
+== 1.2.17 (March 26th 2012)
+
+* Improve connector guessing
+* Rename t-online.de connector
+* Fix gem description
+
+== 1.2.16 (March 20th 2012)
+
+* Add t-mobile.de connector
+* Refactor seznam.cz connector
+
+== 1.2.15 (March 19th 2012)
+
+* Add inbox.lt connector
+* Add one.lt connector
+* Add seznam.cz connector
+
+== 1.2.14 (March 16th 2012)
+
+* Add web.de connector
+
+== 1.2.13 (March 16th 2012)
+
+* Add GMX.net connector
+
+== 1.2.12 (March 14th 2012)
+
+* Fix AOL connector
+* Fix mail.ru connector
+
+== 1.2.11 (March 13th 2012)
+
+* Improve Gmail connector: fallback to non primary emails
+
+== 1.2.10 (March 2nd 2012)
+
+* Add options parameter to specify types in guess method
+* Fix compatibility of Ruby 1.9.3
+
+== 1.2.9 (February 23th 2012)
+
+* Add Gemfile installation line in README
+* Fix formatting on README
+* Take care of cases when there's no email
+
+== 1.2.8 (February 22th 2012)
+
+* Dynamically look for the correct contact url in Hotmail connector
+* Some csv files use semi colons as separators in Hotmail connector
+
+== 1.2.7 (February 21th 2012)
+
+* Use the latest json gem (v1.6.5)
+
+== 1.2.6 (February 21th 2012)
+
+* Fix Hotmail connector
+* Use hotmail contacts export to get them in csv format
+* Refactor the Rakefile
+* Specify version in the gemspec file
+* Use bundler to handle gem dependencies
+* Remove Gem Installer
+* Remove Cruise Control
+* Fork of the contacts_19 gem

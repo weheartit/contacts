@@ -1,6 +1,9 @@
+$:.push File.expand_path('../lib', __FILE__)
+require 'contacts/version'
+
 Gem::Specification.new do |s|
   s.name = "liangzan-contacts"
-  s.version = "1.2.25"
+  s.version = Contacts::VERSION
   s.platform = Gem::Platform::RUBY
   s.authors = ["Lucas Carlson","Brad Imbierowicz", "Wong Liang Zan", "Mateusz Konikowski", "Laurynas Butkus"]
   s.email = "zan@liangzan.net"
